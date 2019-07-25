@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from . import forms
 from post.models import Post
 # Create your views here.
-
+@login_required
 def home(request):
     groups = Groups.objects.all()
     return render(request, 'all_groups.html',{'groups':groups})
@@ -48,7 +48,7 @@ def join_group(request):
             # return redirect('add_group')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
+@login_required
 def leave_group(request):
     if request.method == 'POST':
         if request.POST['group_id']:
@@ -56,18 +56,18 @@ def leave_group(request):
             # return redirect('add_group')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
+@login_required
 def delete_group(request):
     if request.method == 'POST':
         Groups.objects.filter(id = request.POST['group_id']).delete()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         # return redirect('groups')
 
-
+@login_required
 def logout(request):
     auth.logout(request)
     return redirect('login')
-
+@login_required
 def group_details(request, slug):
     group = Groups.objects.filter(slug = slug).first()
     request.session['group_id'] = group.id
