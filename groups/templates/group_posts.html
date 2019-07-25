@@ -1,0 +1,42 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+<div class="container">
+
+
+ <div class = 'col-lg-12'>
+
+     <h1>Posts</h1><a href="{% url 'add_post' %}" class = 'btn btn-success'>Add Posts</a>
+    <hr style="background-color: white;">
+    
+        
+        
+    {% for post in posts  %}
+    <div class="card text-primary mt-2" >
+   <h5 class="card-header"><a class = 'text-primary' href= "#">{{ post.title }}</a><cite style='float: right; font-size: 15px;'>Created By: {{ post.user }} Created At: {{ post.created_at }}</cite></h5>
+    
+  <div class="card-body">
+   
+    <p class="card-text">{{ post.body | truncatechars:20}}</p>
+    
+   
+    <a href = "{% url 'post_details' post.slug %}" class="btn btn-primary ml-2">Read More</a>
+    {% if request.user.id == post.user.id %}
+    <form method= 'POST' action="{% url 'delete_post' %}" style='float:left;'>
+    {% csrf_token %}
+    <input type='hidden' name = 'post_id' value = '{{ post.id }}'></input>
+    <button type='submit' class="btn btn-danger">Delete</button>
+    </form>   
+    {% endif %}
+    
+    
+    
+  </div>
+</div>{% endfor %}
+        
+        
+   </div>
+
+
+</div>
+{% endblock %}

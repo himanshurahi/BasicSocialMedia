@@ -1,0 +1,72 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+<div class="container">
+
+
+<div class='row'>
+    <div class = 'col-lg-6'>
+    <h1>Add Group</h1>
+<hr style="background-color: white;">
+    <h1>{{ errors }}</h1>
+    <form method="POST" action='{% url 'add_group' %}'>
+    {% csrf_token %}
+
+    {{ form.as_p }}
+  
+  
+    
+
+    <button type="submit" class="btn btn-success" >Add Group</button>
+    </form>
+    
+    </div>
+
+    <div class = 'col-lg-6'>
+
+     <h1>Your Groups</h1>
+    <hr style="background-color: white;">
+    {% if groups %}
+    {% for group in groups  %}
+        
+        
+    <div class="card text-primary mt-2" >
+   
+   
+    
+
+    
+    
+    <h5 class="card-header">{{ group.name }}<cite style='float: right; font-size: 15px;'>Created At: {{ group.created_at }}</cite></h5>
+    
+  <div class="card-body">
+   
+    <p class="card-text">{{ group.description }}</p>
+    
+    
+     <form method= 'POST' action="{% url 'delete_group' %}" style='float:left;'>
+    {% csrf_token %}
+    <input type='hidden' name = 'group_id' value = '{{ group.id }}'></input>
+    <button type='submit' class="btn btn-danger" >Delete</button>
+    </form>
+    
+   
+    
+     <a href="#" class="btn btn-warning" style="border-radius: 20px; float: right; margin-left: 2px;">Members ({{group.members.all.count}})</a>
+      <a href="{% url 'group_details' group.slug %}" class="btn btn-success" style="border-radius: 20px; float: right;">Posts ({{group.post_set.count}})</a>
+
+  </div>
+</div>
+        
+        {% endfor %}
+   
+    {% else %}
+    <h1>You Don't Have Any Group</h1>
+    {% endif %}
+   </div>
+    
+</div>
+
+
+</div>
+{% endblock %}

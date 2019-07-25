@@ -1,0 +1,23 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>Welcome To this amazing Social Website</h1>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3" style="border: 1px solid white; padding: 20px;">
+            <h2>Welcome Back</h2>
+            <h3><a href="">@{{ request.user.username }}</a></h3>
+            <a href="{% url 'add_group' %}" class="btn btn-warning text-white"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create Groups</a>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
