@@ -13,7 +13,7 @@ def home(request):
 
 @login_required
 def add_group(request):
-    groups = User.objects.get(id = request.user.id).members.all()
+    groups = Groups.objects.filter(group_admin = request.user.id)
     
     
     
